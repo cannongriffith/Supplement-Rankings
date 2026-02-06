@@ -27,10 +27,6 @@ export function Footer() {
               <li><Link to="/category/vitamins-minerals" className="hover:text-teal-400">Vitamins</Link></li>
               <li><Link to="/category/sleep-aids" className="hover:text-teal-400">Sleep Aids</Link></li>
               <li><Link to="/category/longevity-anti-aging" className="hover:text-teal-400">Longevity</Link></li>
-              <li><Link to="/category/pre-workout" className="hover:text-teal-400">Pre-Workout</Link></li>
-              <li><Link to="/category/creatine-performance" className="hover:text-teal-400">Creatine</Link></li>
-              <li><Link to="/category/joint-bone-health" className="hover:text-teal-400">Joint Health</Link></li>
-              <li><Link to="/category/gut-health-probiotics" className="hover:text-teal-400">Gut Health</Link></li>
             </ul>
           </div>
 

@@ -12,10 +12,6 @@ const CATEGORY_ICONS: Record<string, string> = {
   'vitamins-minerals': '\u2764\uFE0F',
   'sleep-aids': '\u{1F319}',
   'longevity-anti-aging': '\u2600\uFE0F',
-  'pre-workout': '\u{1F4AA}',
-  'creatine-performance': '\u{1F3CB}\uFE0F',
-  'joint-bone-health': '\u{1F9B4}',
-  'gut-health-probiotics': '\u{1F33F}',
 };
 
 export function Home() {
@@ -35,7 +31,7 @@ export function Home() {
           .from('rankings')
           .select('*, product:products(*)')
           .eq('rank_position', 1)
-          .limit(10),
+          .limit(6),
         supabase
           .from('deals')
           .select('*, product:products(*)')
@@ -43,7 +39,7 @@ export function Home() {
           .gt('expires_at', new Date().toISOString())
           .order('discount_percentage', { ascending: false })
           .limit(4),
-        supabase.from('stacks').select('*').order('display_order').limit(4),
+        supabase.from('stacks').select('*').order('display_order').limit(3),
       ]);
       if (catRes.data) setCategories(catRes.data);
       if (rankRes.data) {
@@ -106,7 +102,7 @@ export function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 max-w-3xl mx-auto">
             {[
-              { icon: CheckCircle, label: '80+ Products Reviewed', sub: 'Across 10 major categories' },
+              { icon: CheckCircle, label: '100+ Products Reviewed', sub: 'Across all major categories' },
               { icon: Shield, label: 'Third-Party Verified', sub: 'We verify testing standards' },
               { icon: Users, label: 'Real User Feedback', sub: 'Verified user ratings' },
             ].map(({ icon: Icon, label, sub }) => (
@@ -180,15 +176,15 @@ export function Home() {
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Browse by Category</h2>
             <p className="text-gray-600 max-w-xl mx-auto">
-              Explore top-ranked supplements across ten major categories, each evaluated with our rigorous methodology.
+              Explore top-ranked supplements across six major categories, each evaluated with our rigorous methodology.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {categories.map((cat) => (
               <Link
                 key={cat.id}
                 to={`/category/${cat.slug}`}
-                className="group relative p-4 md:p-5 rounded-xl border-2 border-gray-200 hover:border-teal-500 bg-white hover:bg-teal-50/50 transition-all duration-200"
+                className="group relative p-5 md:p-6 rounded-xl border-2 border-gray-200 hover:border-teal-500 bg-white hover:bg-teal-50/50 transition-all duration-200"
               >
                 <span className="text-3xl md:text-4xl block mb-3">{CATEGORY_ICONS[cat.slug] || '\u{1F48A}'}</span>
                 <h3 className="font-bold text-gray-900 group-hover:text-teal-700 mb-1">{cat.name}</h3>
@@ -211,13 +207,13 @@ export function Home() {
             </p>
           </div>
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map((i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
                 <div key={i} className="bg-white rounded-xl border border-gray-200 h-96 animate-pulse" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {topProducts.map((p) => (
                 <ProductCard key={p.id} product={p} rank={1} />
               ))}
@@ -257,7 +253,7 @@ export function Home() {
                 View All Stacks <ArrowRight size={14} />
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {stacks.map((stack) => (
                 <Link
                   key={stack.id}

@@ -7,8 +7,6 @@ import { TestimonialCard } from '../components/TestimonialCard';
 import { DealBadge } from '../components/DealBadge';
 import { CountdownTimer } from '../components/CountdownTimer';
 import { StickyProductCTA } from '../components/StickyProductCTA';
-import { ProductImage } from '../components/ProductImage';
-import { useProductImage } from '../hooks/useProductImage';
 import {
   ChevronRight, Award, ExternalLink, CheckCircle,
   Beaker, Shield, Users, AlertTriangle, Pill, HelpCircle, Copy, Check
@@ -24,11 +22,6 @@ export function ProductPage() {
   const [boughtTogether, setBoughtTogether] = useState<(StackProduct & { product: Prod })[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedCode, setCopiedCode] = useState(false);
-  const { imageSrc: mainImageSrc, handleError: handleMainImageError } = useProductImage(
-    product?.image_url || '',
-    product?.name || '',
-    '800x600'
-  );
 
   useEffect(() => {
     async function load() {
@@ -137,10 +130,14 @@ export function ProductPage() {
           <div className="lg:col-span-2 space-y-8">
             <div className="relative">
               <img
-                src={mainImageSrc}
+                src={product.image_url}
                 alt={product.name}
                 className="w-full h-64 sm:h-80 lg:h-96 object-contain p-6 rounded-xl bg-white border border-gray-200"
-                onError={handleMainImageError}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.onerror = null;
+                  target.src = `https://placehold.co/800x600/e2e8f0/64748b?text=${encodeURIComponent(product.name)}`;
+                }}
               />
               {deal && (
                 <div className="absolute top-4 right-4">
@@ -324,12 +321,15 @@ export function ProductPage() {
                   <div className="space-y-4">
                     {boughtTogether.map((sp) => (
                       <div key={sp.id} className="flex items-center gap-4">
-                        <ProductImage
-                          imageUrl={sp.product.image_url}
-                          productName={sp.product.name}
+                        <img
+                          src={sp.product.image_url}
                           alt={sp.product.name}
                           className="w-14 h-14 rounded-lg object-contain p-1 bg-white border border-gray-100 shrink-0"
-                          placeholderSize="112x112"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            target.onerror = null;
+                            target.src = `https://placehold.co/112x112/e2e8f0/64748b?text=${encodeURIComponent(sp.product.name)}`;
+                          }}
                         />
                         <div className="flex-1 min-w-0">
                           <Link to={`/product/${sp.product.slug}`}>
@@ -365,12 +365,15 @@ export function ProductPage() {
                       to={`/product/${r.slug}`}
                       className="group flex items-center gap-3 bg-gray-50 rounded-lg p-3 hover:bg-teal-50 transition-colors"
                     >
-                      <ProductImage
-                        imageUrl={r.image_url}
-                        productName={r.name}
+                      <img
+                        src={r.image_url}
                         alt={r.name}
                         className="w-14 h-14 rounded-lg object-contain p-1 shrink-0 bg-white border border-gray-100"
-                        placeholderSize="112x112"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.onerror = null;
+                          target.src = `https://placehold.co/112x112/e2e8f0/64748b?text=${encodeURIComponent(r.name)}`;
+                        }}
                       />
                       <div className="min-w-0">
                         <p className="font-medium text-gray-900 text-sm group-hover:text-teal-600 truncate">{r.name}</p>
