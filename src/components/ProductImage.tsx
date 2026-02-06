@@ -26,6 +26,7 @@ export function ProductImage({
       alt={alt}
       className={className}
       onError={handleError}
+      referrerPolicy="no-referrer"
     />
   );
 }

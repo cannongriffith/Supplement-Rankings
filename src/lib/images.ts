@@ -1,7 +1,4 @@
 export function getProxiedImageUrl(originalUrl: string): string {
-  if (originalUrl.includes('amazon.com') || originalUrl.includes('media-amazon')) {
-    return `https://wsrv.nl/?url=${encodeURIComponent(originalUrl)}`;
-  }
   return originalUrl;
 }
 

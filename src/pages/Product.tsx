@@ -141,6 +141,7 @@ export function ProductPage() {
                 alt={product.name}
                 className="w-full h-64 sm:h-80 lg:h-96 object-contain p-6 rounded-xl bg-white border border-gray-200"
                 onError={handleMainImageError}
+                referrerPolicy="no-referrer"
               />
               {deal && (
                 <div className="absolute top-4 right-4">

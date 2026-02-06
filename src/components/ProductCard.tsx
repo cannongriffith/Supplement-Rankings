@@ -36,6 +36,7 @@ export function ProductCard({ product, rank }: ProductCardProps) {
           alt={product.name}
           className="w-full h-48 object-contain p-4 group-hover:scale-105 transition-transform duration-500 bg-white"
           onError={handleError}
+          referrerPolicy="no-referrer"
         />
         {rank != null && (
           <div className="absolute top-3 left-3">
