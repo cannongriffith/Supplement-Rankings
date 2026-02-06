@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase, Stack, StackProduct, Product } from '../lib/supabase';
 import { SEO } from '../components/SEO';
 import { StarRating } from '../components/StarRating';
+import { ProductImage } from '../components/ProductImage';
 import { Layers, ExternalLink, ChevronRight, ArrowRight } from 'lucide-react';
 
 type FullStack = Stack & {
@@ -99,15 +100,12 @@ export function StacksPage() {
                     <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-sm shrink-0">
                       {i + 1}
                     </div>
-                    <img
-                      src={sp.product.image_url}
+                    <ProductImage
+                      imageUrl={sp.product.image_url}
+                      productName={sp.product.name}
                       alt={sp.product.name}
                       className="w-16 h-16 rounded-lg object-contain p-1 bg-gray-50 border border-gray-100 shrink-0"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.onerror = null;
-                        target.src = `https://placehold.co/128x128/e2e8f0/64748b?text=${encodeURIComponent(sp.product.name)}`;
-                      }}
+                      placeholderSize="128x128"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-gray-500 font-medium uppercase">{sp.product.brand}</p>

@@ -4,6 +4,7 @@ import { supabase, Deal } from '../lib/supabase';
 import { SEO } from '../components/SEO';
 import { StarRating } from '../components/StarRating';
 import { CountdownTimer } from '../components/CountdownTimer';
+import { ProductImage } from '../components/ProductImage';
 import { Tag, ExternalLink, Copy, Check, Flame } from 'lucide-react';
 
 export function DealsPage() {
@@ -126,15 +127,12 @@ export function DealsPage() {
               >
                 <div className="flex items-stretch">
                   <div className="w-32 sm:w-40 shrink-0 bg-gray-50 flex items-center justify-center p-4">
-                    <img
-                      src={deal.product.image_url}
+                    <ProductImage
+                      imageUrl={deal.product.image_url}
+                      productName={deal.product.name}
                       alt={deal.product.name}
                       className="w-full h-28 object-contain"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.onerror = null;
-                        target.src = `https://placehold.co/300x200/e2e8f0/64748b?text=${encodeURIComponent(deal.product!.name)}`;
-                      }}
+                      placeholderSize="300x200"
                     />
                   </div>
                   <div className="flex-1 p-4 flex flex-col">

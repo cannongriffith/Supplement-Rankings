@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { supabase, QuizQuestion, QuizProductMapping, Product } from '../lib/supabase';
 import { SEO } from '../components/SEO';
 import { StarRating } from '../components/StarRating';
+import { ProductImage } from '../components/ProductImage';
 import { ArrowRight, ArrowLeft, Sparkles, ExternalLink, RotateCcw } from 'lucide-react';
 
 export function QuizPage() {
@@ -99,15 +100,12 @@ export function QuizPage() {
                     </span>
                   )}
                   <div className="flex gap-4 items-start">
-                    <img
-                      src={r.product.image_url}
+                    <ProductImage
+                      imageUrl={r.product.image_url}
+                      productName={r.product.name}
                       alt={r.product.name}
                       className="w-20 h-20 rounded-lg object-contain p-1 bg-gray-50 border border-gray-100 shrink-0"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.onerror = null;
-                        target.src = `https://placehold.co/160x160/e2e8f0/64748b?text=${encodeURIComponent(r.product.name)}`;
-                      }}
+                      placeholderSize="160x160"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-gray-500 font-medium uppercase">{r.product.brand}</p>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle, TrendingUp, Users, Shield, Mail, Sparkles, Tag, Layers } from 'lucide-react';
 import { supabase, Category, Product, Deal, Stack } from '../lib/supabase';
 import { ProductCard } from '../components/ProductCard';
+import { ProductImage } from '../components/ProductImage';
 import { SEO } from '../components/SEO';
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -144,15 +145,12 @@ export function Home() {
                     className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md hover:border-rose-300 transition-all group"
                   >
                     <div className="flex items-center gap-3 mb-2">
-                      <img
-                        src={d.product.image_url}
+                      <ProductImage
+                        imageUrl={d.product.image_url}
+                        productName={d.product.name}
                         alt={d.product.name}
                         className="w-12 h-12 rounded-lg object-contain p-0.5 bg-gray-50 shrink-0"
-                        onError={(e) => {
-                          const target = e.currentTarget;
-                          target.onerror = null;
-                          target.src = `https://placehold.co/96x96/e2e8f0/64748b?text=${encodeURIComponent(d.product!.name)}`;
-                        }}
+                        placeholderSize="96x96"
                       />
                       <div className="min-w-0">
                         <p className="font-bold text-gray-900 text-sm truncate group-hover:text-teal-600">{d.product.name}</p>

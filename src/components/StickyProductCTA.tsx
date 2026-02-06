@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Product } from '../lib/supabase';
 import { StarRating } from './StarRating';
+import { ProductImage } from './ProductImage';
 
 interface StickyProductCTAProps {
   product: Product;
@@ -27,15 +28,12 @@ export function StickyProductCTA({ product }: StickyProductCTAProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <img
-              src={product.image_url}
+            <ProductImage
+              imageUrl={product.image_url}
+              productName={product.name}
               alt={product.name}
               className="w-10 h-10 rounded-lg object-contain p-0.5 bg-gray-50 border border-gray-100 shrink-0 hidden sm:block"
-              onError={(e) => {
-                const target = e.currentTarget;
-                target.onerror = null;
-                target.src = `https://placehold.co/80x80/e2e8f0/64748b?text=${encodeURIComponent(product.name)}`;
-              }}
+              placeholderSize="80x80"
             />
             <div className="min-w-0">
               <p className="font-bold text-gray-900 text-sm truncate">{product.name}</p>
