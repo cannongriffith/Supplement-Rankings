@@ -4,6 +4,7 @@ import { Award, ExternalLink, Tag } from 'lucide-react';
 import { Product, Deal, supabase } from '../lib/supabase';
 import { StarRating } from './StarRating';
 import { RankBadge } from './RankBadge';
+import { useProductImage } from '../hooks/useProductImage';
 
 interface ProductCardProps {
   product: Product;
@@ -12,6 +13,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, rank }: ProductCardProps) {
   const [deal, setDeal] = useState<Deal | null>(null);
+  const { imageSrc, handleError } = useProductImage(product.image_url, product.name, '600x400');
 
   useEffect(() => {
     supabase
@@ -30,14 +32,10 @@ export function ProductCard({ product, rank }: ProductCardProps) {
     <div className="group bg-white rounded-xl border border-gray-200 hover:border-teal-300 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
       <div className="relative overflow-hidden">
         <img
-          src={product.image_url}
+          src={imageSrc}
           alt={product.name}
           className="w-full h-48 object-contain p-4 group-hover:scale-105 transition-transform duration-500 bg-white"
-          onError={(e) => {
-            const target = e.currentTarget;
-            target.onerror = null;
-            target.src = `https://placehold.co/600x400/e2e8f0/64748b?text=${encodeURIComponent(product.name)}`;
-          }}
+          onError={handleError}
         />
         {rank != null && (
           <div className="absolute top-3 left-3">
